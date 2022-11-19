@@ -156,18 +156,67 @@ SET SQL_SAFE_UPDATES = 0;
 Select * from workers;
 
 -- We can perform calculation
-
 Update workers set PINCODE = PINCODE + 1;
 
 -- DELETE COMMAND
-
 Delete from workers where id = 2;
 
 -- DELETE ENTIRE ROW
 Delete from workers;  -- I didn't executed this command
 
 
+show databases;
+use human;
+show tables;
+desc person;
+desc orders;
+
+insert into person (PersonID, FirstName, LastName, Age) VALUES (1, "Faiz", "Abbas", 25);
+select * from person;
+
+insert into orders (OrderID, OrderNumber, PersonID) VALUES (12, 1234, 1);
+select * from orders;
+
+--  Trying to INSERT into order table, Error- because foregin key' value does not exist in parent key.
+INSERT INTO orders (OrderID, OrderNumber, PersonID) values (234, 3434, 23);
+
+-- Trying to DELETE from person table, Error- because its corrosponding entry is avaiable in its child table.
+DELETE FROM person where PersonID = 1;
+
+-- ON DELETE CASCADE use in Parent Table - to delete the child enteries during deletion in parent table.
+-- ON DELETE SET NULL use in Parent Table - if we want to null in child table and don't want to delete entire row. - These constraint written with reference.
 
 
+Create table customer (
+CUSID INT primary KEY,
+Name varchar(255),
+Age int
+);
 
+insert into customer values (3, "Rehbar",32);
+select * from customer;
+
+Create table order2 (
+OrderID2 INT primary KEY,
+Name varchar(255),
+CUSID int,
+foreign key (CUSID) references customer (CUSID) ON DELETE SET NULL
+);
+
+DESC ORDER2;
+
+select * from order2;
+
+INSERT INTO ORDER2  VALUES (2, "Abbas", 1);
+
+-- Now if I delete from customer than from table Order2 corrosponding record foreign key's value will be null as we defined in the paraent table ON DELETE SET NULL.
+
+DELETE FROM CUSTOMER WHERE CUSID = 1;
+
+SELECT * FROM CUSTOMER;
+INSERT INTO CUSTOMER values (2, "Raza", 29);
+
+select * from order2;
+
+insert into order2 values (1, "Abbas", 1);
 
