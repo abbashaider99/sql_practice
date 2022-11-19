@@ -1,0 +1,173 @@
+SELECT * FROM WORKERS;
+
+use human;
+show databases;
+drop database students;
+
+create table person(
+PersonID int PRIMARY KEY,
+FirstName VARCHAR(255),
+LastName VARCHAR(255),
+Age int(10)
+);
+
+desc person;
+
+create table Orders (
+OrderID int Primary Key,
+OrderNumber int(50),
+PersonID int,
+foreign key(PersonID) references person(PersonID)
+);
+
+desc Orders;
+
+
+--------------- --    - - - -- -- -- -- -- - -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- - -- -- -
+
+-- Reduce OR statement 
+SELECT * FROM WORKERS WHERE COUNTRY= 'India' OR COUNTRY = 'Pakistan' Or Country = 'Nepal';
+
+-- Better way IN
+SELECT * FROM WORKERS WHERE COUNTRY IN ('India', 'Pakistan', 'Nepal');
+
+-- NOT IN
+SELECT * FROM WORKERS WHERE COUNTRY NOT IN('India', 'Pakistan');  
+
+INSERT INTO WORKERS (FIRST_NAME, LAST_NAME, SALARY, JOINING_DATE, COUNTRY) VALUES ('ABBAS', 'HAIDER', 55000, 'JUNE 4 2022', NULL);
+
+-- if null value
+SELECT * FROM WORKERS WHERE COUNTRY is NULL;
+
+-- Wildcard
+SELECT * FROM WORKERS WHERE FIRST_NAME LIKE '_I%';
+
+-- Sorting using Order By 'ASC (DEFAULT)', DESC for Descending
+SELECT * FROM WORKERS ORDER BY SALARY;
+
+-- Distinct
+SELECT DISTINCT COUNTRY FROM WORKERS;
+
+-- Group by
+SELECT COUNTRY, COUNT(country) FROM WORKERS GROUP BY COUNTRY;
+
+SELECT COUNTRY, MIN(SALARY) FROM WORKERS GROUP BY COUNTRY;
+
+SELECT COUNTRY, MAX(SALARY) FROM WORKERS GROUP BY COUNTRY;
+
+SELECT COUNTRY, SUM(SALARY) FROM WORKERS GROUP BY COUNTRY;
+
+SELECT COUNTRY, AVG(SALARY) FROM WORKERS GROUP BY COUNTRY;
+
+SELECT COUNTRY, count(COUNTRY) FROM WORKERS GROUP BY COUNTRY HAVING COUNT(COUNTRY) > 1;
+
+SELECT COUNTRY, MIN(SALARY) FROM WORKERS GROUP BY COUNTRY ORDER BY MIN(SALARY);
+
+-- CHECK CONSTRAINT
+
+create table account(
+Id int primary key,
+name varchar(255),
+AccNumber int(50) UNIQUE,
+balance INT,
+constraint acc_balance_chk check (balance> 1000)
+);
+desc account;
+
+insert into account(Id, name, AccNumber, balance) Values (2, "Abbas", 94525, 5000);
+
+SELECT * FROM ACCOUNT;
+
+ --    DEFAULT VALUE -----
+DROP TABLE ACCOUNT;
+
+create table account(
+id int primary key,
+name varchar(255),
+balance int not null default 0
+);
+desc account;
+
+insert into account(id, name) values (1, "AbbasHaider");
+
+select * from account;
+
+-- ALTER COMMANDS (ADD, DROP, MODIFY, RENAME, CHANGE)
+
+-- ADD COLUMN
+Alter table account add column interest int(50); 
+
+-- DELETE COLUMN
+Alter table account drop column interest;
+
+-- MODIFIY COLUMN -> CAN MODIFY ONLY DATATYPE AND CAN ADD CONSTRAINT ONLY.
+alter table account MODIFY column interest double default 0;
+desc account;
+
+-- REMANE COLUMN -> COMMAND CHANGE ONLY COLUMN NAME 
+Alter table account RENAME column interest to interestRate;
+
+-- CHANGE COLUMN -> COMMAND CAN CHANGE DATATYPE AND CAN ADD CONSTRAINT TOO.alter
+Alter table account CHANGE column interestRate Interest_Rate float default 0;
+
+-- RENAME THE TABLE
+Alter table account RENAME to account_info;
+desc account_info;
+
+-- DML (DATA MODIFICATION COMMAND), (INSERT, SELECT, UPDATE, DELETE) COMMAND
+
+-- SELECT COMMAND FOR RETRIEVE DATA
+
+Select * from account_info;
+
+-- INSERT COMMAND 
+Insert into account_info(id, name) VALUES (2, "John"); -- balance and interest rate is default so don't need to insert.
+
+-- UPDATE COMMAND
+Update account_info set Interest_Rate = 10 where id=2;
+
+-- -------------------------------------------------------------------------------------------------------------------!
+
+show databases;
+use company;
+show tables;
+select * from workers;
+
+
+Insert INTO workers(id, FIRST_NAME, LAST_NAME, SALARY, JOINING_DATE, COUNTRY) VALUES (14, "NAZZER", "JAFRI", 23000, "MAY 23 2022", "India");
+
+-- INSERT COMMAND WITH LESS INFO
+Insert INTO workers (id, first_name, salary) VALUES (15, "Haider" ,3400);
+
+-- UPDATE COMMAND 
+Update workers set LAST_NAME = "BAQRI", JOINING_DATE = "JAN 23 2019", COUNTRY = "CANADA" Where id = 15;
+
+-- UPDATE MULTIPLE OR ALL COLUMNS
+ 
+ -- first we add a new column so that we can update saperately from improtant data.
+ alter table workers add column PINCODE int;
+ 
+ -- Now update PINCODE column with some values
+Update workers set PINCODE = 244304;
+
+-- Disable safe mode
+SET SQL_SAFE_UPDATES = 0;
+
+Select * from workers;
+
+-- We can perform calculation
+
+Update workers set PINCODE = PINCODE + 1;
+
+-- DELETE COMMAND
+
+Delete from workers where id = 2;
+
+-- DELETE ENTIRE ROW
+Delete from workers;  -- I didn't executed this command
+
+
+
+
+
+
