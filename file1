@@ -171,11 +171,11 @@ show tables;
 desc person;
 desc orders;
 
-insert into person (PersonID, FirstName, LastName, Age) VALUES (1, "Faiz", "Abbas", 25);
-select * from person;
+INSERT into person (PersonID, FirstName, LastName, Age) VALUES (1, "Faiz", "Abbas", 25);
+SELECT * from person;
 
-insert into orders (OrderID, OrderNumber, PersonID) VALUES (12, 1234, 1);
-select * from orders;
+INSERT into orders (OrderID, OrderNumber, PersonID) VALUES (12, 1234, 1);
+SELECT * from orders;
 
 --  Trying to INSERT into order table, Error- because foregin key' value does not exist in parent key.
 INSERT INTO orders (OrderID, OrderNumber, PersonID) values (234, 3434, 23);
@@ -219,4 +219,56 @@ INSERT INTO CUSTOMER values (2, "Raza", 29);
 select * from order2;
 
 insert into order2 values (1, "Abbas", 1);
+
+-- -----------------------------------------------------JOINS-----------------------------------------------
+
+-- INNER JOIN
+SELECT p.*, o.* from person as p INNER JOIN orders as o ON p.personid = o.personid;
+
+-- Using Inner join without using INNER JOIN KEYWORD
+SELECT p.*, o.* from person as p, orders as o where p.personid = o.personid;
+
+-- LEFT JOIN
+SELECT p.*, o.* from person as p LEFT JOIN orders as o ON p.personid = o.personid;
+
+-- RIGHT JOIN
+SELECT p.*, o.* from person as p RIGHT JOIN orders as o ON p.personid = o.personid;
+
+-- FULL JOIN  (LEFT JOIN + UNION + RIGHT JOIN)
+SELECT p.*, o.* from person as p LEFT JOIN orders as o ON p.personid = o.personid UNION 
+SELECT p.*, o.* from person as p RIGHT JOIN orders as o ON p.personid = o.personid;
+
+-- CROSS JOIN
+
+-- UNION
+
+
+-- But in this case person and orders having different columns so its not possible to find out thr result.
+SELECT * FROM PERSON
+UNION
+SELECT * FROM ORDERS;
+
+-- CREASTING VIEW - VIEW IS LIKE A GOGGLES WE CAN LIMIT THE COLUMNS TO SHOW
+Create view custom_view AS SELECT FirstName, Age FROM PERSON;
+
+-- VIEWING FROM VIEW
+Select * from custom_view;
+
+-- ALTERING THE VIEW
+ALTER VIEW custom_view AS SELECT FirstName, LastName, Age from Person;
+
+-- DROPPING THE VIEW
+DROP VIEW if exists custom_view;
+
+
+ 
+
+
+
+
+
+
+
+
+
 
