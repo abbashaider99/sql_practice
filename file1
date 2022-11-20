@@ -243,6 +243,8 @@ SELECT p.*, o.* from person as p RIGHT JOIN orders as o ON p.personid = o.person
 -- UNION
 
 
+
+
 -- But in this case person and orders having different columns so its not possible to find out thr result.
 SELECT * FROM PERSON
 UNION
@@ -262,6 +264,88 @@ DROP VIEW if exists custom_view;
 
 
  
+-- ------------------------QUESTIONS---------------------------
+show databases;
+use company;
+show tables;
+select * from workers;
+select salary from workers order by salary desc;
+select top salary from workers;
+
+
+-- 2nd highest salary
+select max(salary) from workers where salary not in (select max(salary) from workers);
+
+-- nth highest salary
+
+select distinct salary from workers order by salary desc;
+insert into workers values(16, "john", "abbas", 239805, "JAN 2 2019", "India", 244304);
+
+-- select salary from workers order by salary desc limit N-1, 1;
+select distinct salary from workers order by salary desc LIMIT 1,1;
+
+
+-- INTERVIEW PRACTICE
+
+-- 1) CREATE DATABASE
+CREATE DATABASE IF NOT EXISTS MYDB; -- right practices to write
+
+-- Like keyword
+SELECT * FROM WORKERS WHERE FIRST_NAME LIKE 'A%' OR  FIRST_NAME like '%S';
+
+-- find current date and time---
+select current_date();
+select current_time();
+
+-- FETCH ALTERNATE RESULT FROM THE TABLE
+-- dummy practice
+select * from workers;
+select first_name, count(first_name) from workers group by first_name;
+
+-- fetch even rows
+select * from workers where id%2=0;
+
+-- fetch odd rows
+select * from workers where id%2=1;
+
+-- duplicate entries check
+select first_name, count(first_name) as Total from workers group by first_name having count(first_name)>1;
+
+insert into workers values (18, "Haider", "Baqri", 23423, "JUNE 4 2018", "India", 244304);
+
+-- find first 5 records
+SELECT * FROM WORKERS LIMIT 5;
+
+-- FIND LAST 5 RECORDS
+
+SELECT * FROM WORKERS ORDER BY ID desc limit 5;
+
+-- FIND FIRST RECORD OF THE TABLE
+SELECT * FROM WORKERS limit 1;
+
+-- FIND LAST RECORD OF THE TABLE
+SELECT MAX(ID) FROM WORKERS;
+             -- or
+SELECT * FROM WORKERS ORDER BY ID DESC LIMIT 1;
+
+-- FIND DISTICNT VALUES WITHOUT USING DISTINCT KEYWORD - GROUP KEYWOR MAKE A GROUP AND DONT COUNT DUPLICATE VALUES
+SELECT FIRST_NAME FROM WORKERS GROUP BY FIRST_NAME; 
+   -- OR --
+   -- UNION ALSO CAN BE USED
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
